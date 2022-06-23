@@ -8,7 +8,6 @@ class Controller {
 
     let listKanapView = new ListKanapView();
     listKanapView.render(kanaps);
-    // console.log(listKanapView);
   }
 
   // Affiche les données d'un seule canapé
@@ -40,11 +39,20 @@ class Controller {
     product.color = color;
 
     let cart = new Cart(id, quantity, color);
-    cart.add(product);
-    cart.save();
 
     if (quantity == 0) {
-      alert("Vous n'avez pas sélectionnez un nombre d'article");
+      alert("Vous n'avez pas sélectionné un nombre d'article");
+    } else if (color == 0) {
+      alert("SVP, choisissez une couleur")
+    } else {
+      cart.add(product);
+      cart.save();
     }
+  }
+
+  async cartDisplay() {
+    let cartView = new CartView();
+    cartView.render(cart);
+    console.log(cart);
   }
 }

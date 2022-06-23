@@ -7,6 +7,7 @@ class Cart {
     } else {
       this.cart = JSON.parse(cart);
     }
+    
   }
 
   // Sauvegarde le panier dans le local storage
@@ -17,8 +18,7 @@ class Cart {
   // Ajout un produit dans le panier
   add(product) {
     let selectedPoduct = this.cart.find(
-      (p) => p.id == product.id && p.color == product.color
-    );
+      (p) => p.id == product.id && p.color == product.color);
 
     if (selectedPoduct != undefined) {
       selectedPoduct.quantity += product.quantity;
