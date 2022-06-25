@@ -7,7 +7,6 @@ class Cart {
     } else {
       this.cart = JSON.parse(cart);
     }
-    
   }
 
   // Sauvegarde le panier dans le local storage

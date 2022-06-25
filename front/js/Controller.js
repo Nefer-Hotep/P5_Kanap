@@ -51,8 +51,20 @@ class Controller {
   }
 
   async cartDisplay() {
+
+    
+    let model = new Model();
+    let kanaps = await model.getListKanap();
+
+    
+    let productInCart = new Cart();
     let cartView = new CartView();
-    cartView.render(cart);
-    console.log(cart);
-  }
+    
+    
+
+
+    cartView.render(productInCart, kanaps);
+    // console.log(productInCart);
+    // console.log(kanaps);
+  }  
 }

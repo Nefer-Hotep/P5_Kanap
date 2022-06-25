@@ -2,7 +2,7 @@
 
 class ListKanapView {
   render(kanaps) {
-    
+    console.log(kanaps);
     for (let i = 0; i < kanaps.length; i++) {
       
       // Récupère l'id de <section id="items">
