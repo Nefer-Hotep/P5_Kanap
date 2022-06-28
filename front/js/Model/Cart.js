@@ -30,7 +30,7 @@ class Cart {
   // Supprime un produit du panier
   remove(product) {
     this.cart = this.cart.filter((p) => p.id != product.id);
-    this.save(cart);
+    this.save();
   }
 
   // Change une quantité d'un produit du panier
@@ -57,10 +57,15 @@ class Cart {
   }
 
   // Calcule le prix total du panier
-  getTotalPrice() {
+  getTotalPrice(kanap, cart) {
+    // console.log(kanap, cart);
     let total = 0;
+    let productInCart = new Cart("id")
+    console.log(productInCart);
     for (let product of this.cart) {
-      total += product.quantity * product.price;
+      // console.log(product);
+      total += kanap.price * product.quantity;
+      // console.log(product.quantity);
     }
     return total;
   }

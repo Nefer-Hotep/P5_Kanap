@@ -1,5 +1,4 @@
 // Model : gère les données d'une application (l'ajout, la modification, la suppression...)
-
 class Model {
   // Récupère les données de l'API
   async getListKanap() {

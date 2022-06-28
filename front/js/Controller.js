@@ -50,21 +50,43 @@ class Controller {
     }
   }
 
+  // Affiche le panier depuis le local storage et les données de l'api
   async cartDisplay() {
+    let cart = new Cart()
+
+    for (let i = 0; i < cart.cart.length; i++){
+      let cartId = cart.cart[i].id;
+      let cartColor = cart.cart[i].color
+      let cartQuantity = cart.cart[i].quantity
+
+      let model = new Model();
+      let kanap = await model.getKanap(cartId);
+      
+      let cartView = new CartView();
+      cartView.render(cart, kanap, cartColor, cartQuantity);  
+    }
+
+    // Change la quantité de produit dans le panier
+    let itemQuantity = document.querySelector(".itemQuantity");
+    // console.log(itemQuantity);
+  
+    // Supprime un produit du panier
+    let deleteItem = document.querySelector(".deleteItem");
+    // console.log(deleteItem);
 
     
-    let model = new Model();
-    let kanaps = await model.getListKanap();
-
-    
-    let productInCart = new Cart();
-    let cartView = new CartView();
-    
-    
-
-
-    cartView.render(productInCart, kanaps);
-    // console.log(productInCart);
-    // console.log(kanaps);
   }  
+
+  removeItemFromCart() {
+    let cart = new Cart();
+    console.log(cart);
+    cart.remove()   
+  }
+
+  changeNumberOfItem() {
+    let cart = new Cart()
+
+    cart.changeQuantity(cart)
+  }
+
 }
