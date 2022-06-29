@@ -1,5 +1,4 @@
 // Controller : lie l'utilisateur et le system, il gère les interactions
-
 class Controller {
   // Affiche des données reçu de tous les canapés
   async kanapsDisplay() {
@@ -12,6 +11,7 @@ class Controller {
 
   // Affiche les données d'un seule canapé
   async kanapDisplay() {
+
     // Créer une variable de l'emplacement actuel de l'Url(search la partie après le ?)
     const urlSearch = new URLSearchParams(window.location.search);
     // Créer une constante Get qui lit l'id
@@ -43,7 +43,7 @@ class Controller {
     if (quantity == 0) {
       alert("Vous n'avez pas sélectionné un nombre d'article");
     } else if (color == 0) {
-      alert("SVP, choisissez une couleur")
+      alert("SVP, choisissez une couleur");
     } else {
       cart.add(product);
       cart.save();
@@ -52,41 +52,25 @@ class Controller {
 
   // Affiche le panier depuis le local storage et les données de l'api
   async cartDisplay() {
-    let cart = new Cart()
-
-    for (let i = 0; i < cart.cart.length; i++){
-      let cartId = cart.cart[i].id;
-      let cartColor = cart.cart[i].color
-      let cartQuantity = cart.cart[i].quantity
-
-      let model = new Model();
-      let kanap = await model.getKanap(cartId);
-      
-      let cartView = new CartView();
-      cartView.render(cart, kanap, cartColor, cartQuantity);  
-    }
-
-    // Change la quantité de produit dans le panier
-    let itemQuantity = document.querySelector(".itemQuantity");
-    // console.log(itemQuantity);
-  
-    // Supprime un produit du panier
-    let deleteItem = document.querySelector(".deleteItem");
-    // console.log(deleteItem);
-
-    
-  }  
-
-  removeItemFromCart() {
     let cart = new Cart();
-    console.log(cart);
-    cart.remove()   
+    let cartView = new CartView();
+
+    // Récupère la list des kanaps depuis CartModel avec les données du local storage ensemble
+    let listKanap = await cart.getCartProduct();
+    // Affiche le contenu de listKanap avec le template de cartView
+    cartView.render(listKanap);
   }
 
-  changeNumberOfItem() {
-    let cart = new Cart()
-
-    cart.changeQuantity(cart)
+  // Supprime les produits du panier
+  removeItemFromCart(id, color) {
+    let cart = new Cart();
+    cart.remove(id, color);
+    this.cartDisplay();
   }
 
+  changeNumberOfItem(id, color, quantity) {
+    let cart = new Cart();
+    cart.changeQuantity(id, color, quantity);
+    // this.cartDisplay();
+  }
 }

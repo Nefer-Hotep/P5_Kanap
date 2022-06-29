@@ -9,6 +9,22 @@ class Cart {
     }
   }
 
+  async getCartProduct() {
+    let listKanap = []
+
+    for (let i = 0; i < this.cart.length; i++){
+      let currentProduct = this.cart[i]
+
+      let model = new Model();
+      let kanap = await model.getKanap(currentProduct.id);
+      kanap.color = currentProduct.color
+      kanap.quantity = currentProduct.quantity
+      listKanap.push(kanap)
+    }
+
+    return listKanap
+  }
+
   // Sauvegarde le panier dans le local storage
   save() {
     localStorage.setItem("cart", JSON.stringify(this.cart));
@@ -28,24 +44,29 @@ class Cart {
   }
 
   // Supprime un produit du panier
-  remove(product) {
-    this.cart = this.cart.filter((p) => p.id != product.id);
+  remove(id, color) {
+    this.cart = this.cart.filter((p) => p.id !== id || p.color !== color);
     this.save();
   }
 
   // Change une quantité d'un produit du panier
-  changeQuantity(product, quantity) {
-    let selectedPoduct = this.cart.find((p) => p.id == product.id);
+  
+  /*problème de valeur au début du calcul*/
+  changeQuantity(id, quantity, color) {
+    let selectedProduct = this.cart.find((p) => p.id == id && p.color == color);
 
-    if (selectedPoduct != undefined) {
-      selectedPoduct.quantity += quantity;
-      if (selectedPoduct.quantity <= 0) {
-        this.remove(selectedPoduct);
+    console.log(selectedProduct);
+    if (selectedProduct != undefined) {
+      selectedProduct.quantity += quantity;
+      if (selectedProduct.quantity <= 0) {
+        this.remove(selectedProduct);
       } else {
         this.save();
       }
     }
   }
+  /*problème de valeur au début du calcul*/
+
 
   // Calcule la quantité total de produit dans le panier
   getNumberProduct() {
@@ -57,15 +78,11 @@ class Cart {
   }
 
   // Calcule le prix total du panier
-  getTotalPrice(kanap, cart) {
-    // console.log(kanap, cart);
+  getTotalPrice(listKanap) {
     let total = 0;
-    let productInCart = new Cart("id")
-    console.log(productInCart);
-    for (let product of this.cart) {
-      // console.log(product);
-      total += kanap.price * product.quantity;
-      // console.log(product.quantity);
+
+    for (let kanap of listKanap) {
+      total += kanap.price * kanap.quantity;
     }
     return total;
   }
