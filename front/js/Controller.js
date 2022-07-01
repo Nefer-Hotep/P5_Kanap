@@ -11,7 +11,6 @@ class Controller {
 
   // Affiche les données d'un seule canapé
   async kanapDisplay() {
-
     // Créer une variable de l'emplacement actuel de l'Url(search la partie après le ?)
     const urlSearch = new URLSearchParams(window.location.search);
     // Créer une constante Get qui lit l'id
@@ -39,7 +38,7 @@ class Controller {
     product.color = color;
 
     let cart = new Cart(id, quantity, color);
-
+    console.log(cart);
     if (quantity == 0) {
       alert("Vous n'avez pas sélectionné un nombre d'article");
     } else if (color == 0) {
@@ -57,6 +56,15 @@ class Controller {
 
     // Récupère la list des kanaps depuis CartModel avec les données du local storage ensemble
     let listKanap = await cart.getCartProduct();
+
+    // Affiche le nombre de produit dans le panier
+    let totalCartQuantity = document.getElementById("totalQuantity");
+    totalCartQuantity.textContent = cart.getNumberProduct();
+    
+    // Affiche le prix total du panier
+    let totalCartPrice = document.getElementById("totalPrice");
+    totalCartPrice.textContent = cart.getTotalPrice(listKanap);
+    
     // Affiche le contenu de listKanap avec le template de cartView
     cartView.render(listKanap);
   }
@@ -68,9 +76,9 @@ class Controller {
     this.cartDisplay();
   }
 
-  changeNumberOfItem(id, color, quantity) {
+  changeNumberOfItem(id, color) {
     let cart = new Cart();
-    cart.changeQuantity(id, color, quantity);
+    cart.changeQuantity(id, color);
     // this.cartDisplay();
   }
 }

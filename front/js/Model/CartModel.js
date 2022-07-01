@@ -10,19 +10,19 @@ class Cart {
   }
 
   async getCartProduct() {
-    let listKanap = []
+    let listKanap = [];
 
-    for (let i = 0; i < this.cart.length; i++){
-      let currentProduct = this.cart[i]
+    for (let i = 0; i < this.cart.length; i++) {
+      let currentProduct = this.cart[i];
 
       let model = new Model();
       let kanap = await model.getKanap(currentProduct.id);
-      kanap.color = currentProduct.color
-      kanap.quantity = currentProduct.quantity
-      listKanap.push(kanap)
+      kanap.color = currentProduct.color;
+      kanap.quantity = currentProduct.quantity;
+      listKanap.push(kanap);
     }
 
-    return listKanap
+    return listKanap;
   }
 
   // Sauvegarde le panier dans le local storage
@@ -33,7 +33,8 @@ class Cart {
   // Ajout un produit dans le panier
   add(product) {
     let selectedPoduct = this.cart.find(
-      (p) => p.id == product.id && p.color == product.color);
+      (p) => p.id == product.id && p.color == product.color
+    );
 
     if (selectedPoduct != undefined) {
       selectedPoduct.quantity += product.quantity;
@@ -50,23 +51,18 @@ class Cart {
   }
 
   // Change une quantité d'un produit du panier
-  
-  /*problème de valeur au début du calcul*/
-  changeQuantity(id, quantity, color) {
+  changeQuantity(id, color) {
     let selectedProduct = this.cart.find((p) => p.id == id && p.color == color);
-
-    console.log(selectedProduct);
-    if (selectedProduct != undefined) {
-      selectedProduct.quantity += quantity;
-      if (selectedProduct.quantity <= 0) {
-        this.remove(selectedProduct);
-      } else {
-        this.save();
-      }
-    }
+   
+    document.querySelectorAll(".itemQuantity").forEach(input => {
+      input.addEventListener('click', (e) => {
+        if (selectedProduct !== undefined && e.currentTarget.value > 0) {
+          selectedProduct.quantity = e.currentTarget.value;
+          this.save();
+        }
+      })
+    })
   }
-  /*problème de valeur au début du calcul*/
-
 
   // Calcule la quantité total de produit dans le panier
   getNumberProduct() {
