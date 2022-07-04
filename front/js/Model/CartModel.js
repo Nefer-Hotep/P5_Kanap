@@ -65,7 +65,7 @@ class Cart {
   }
 
   // Calcule la quantité total de produit dans le panier
-  getNumberProduct() {
+  getTotalQuantity() {
     let number = 0;
     for (let product of this.cart) {
       number += product.quantity;
@@ -76,7 +76,6 @@ class Cart {
   // Calcule le prix total du panier
   getTotalPrice(listKanap) {
     let total = 0;
-
     for (let kanap of listKanap) {
       total += kanap.price * kanap.quantity;
     }
