@@ -1,4 +1,18 @@
 class Form {
+
+  // Créer un array de product-Id
+  getProductIdForPost() {
+    let products = []
+    let cart = new Cart()
+
+    for (let i = 0; i < cart.cart.length; i++) {
+      let currentProduct = cart.cart[i]    
+      products.push(currentProduct.id)
+    }
+    
+    return products
+  }
+
   // Créer un template de message d'erreur
   errorDisplay(tag, message, valid) {
     const errorMessage = document.getElementById(tag + "ErrorMsg");
@@ -10,6 +24,7 @@ class Form {
     }
   }
 
+  // Vérifie le prénom et affiche un message d'erreur si besoin
   firstNameChecker(value) {
     if (value.length > 0 && (value.length < 2 || value.length > 30)) {
       this.errorDisplay(
@@ -29,6 +44,7 @@ class Form {
     }
   }
 
+  // Vérifie le nom et affiche un message d'erreur si besoin
   lastNameChecker(value) {
     if (value.length > 0 && (value.length < 2 || value.length > 30)) {
       this.errorDisplay(
@@ -45,6 +61,7 @@ class Form {
     }
   }
 
+  // Vérifie l'adresse et affiche un message d'erreur si besoin
   addressChecker(value) {
     if (value.length > 0 && (value.length < 2 || value.length > 64)) {
       this.errorDisplay(
@@ -64,6 +81,7 @@ class Form {
     }
   }
 
+  // Vérifie la ville et affiche un message d'erreur si besoin
   cityChecker(value) {
     if (value.length > 0 && (value.length < 2 || value.length > 64)) {
       this.errorDisplay(
@@ -80,6 +98,7 @@ class Form {
     }
   }
 
+  // Vérifie l'email et affiche un message d'erreur si besoin
   emailChecker(value) {
     if (!value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
       this.errorDisplay("email", "Votre mail n'est pas valide.");

@@ -14,7 +14,6 @@ class Cart {
 
     for (let i = 0; i < this.cart.length; i++) {
       let currentProduct = this.cart[i];
-
       let model = new Model();
       let kanap = await model.getKanap(currentProduct.id);
       kanap.color = currentProduct.color;

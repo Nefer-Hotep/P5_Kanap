@@ -38,7 +38,6 @@ class Controller {
     product.color = color;
 
     let cart = new Cart(id, quantity, color);
-    console.log(cart);
     if (quantity == 0) {
       alert("Vous n'avez pas sélectionné un nombre d'article");
     } else if (color == 0) {
@@ -68,24 +67,27 @@ class Controller {
     // Affiche le contenu de listKanap avec le template de cartView
     cartView.render(listKanap);
   }
-
+  
   // Supprime les produits du panier situé dans la page panier
   removeItemFromCart(id, color) {
     let cart = new Cart();
     cart.remove(id, color);
     this.cartDisplay();
   }
-
+  
   // Change la quantité de produit situé dans la page panier
   changeNumberOfItem(id, color) {
     let cart = new Cart();
     cart.changeQuantity(id, color);
-    this.cartDisplay();
+    // this.cartDisplay();
   }
-
+  
   // Vérifie les données du formulaire et créer une commande
   createFormOrder() {
     let form = new Form();
+    let model = new Model();
+    let products = form.getProductIdForPost()
+
     const inputs = document.querySelectorAll(
       ".cart__order__form__question, input"
     );
@@ -115,23 +117,24 @@ class Controller {
       });
     });
 
-    submit.addEventListener("submit", (e) => {
+    submit.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       if (firstName && lastName && address && city && email) {
-        const data = {
-          firstName : firstName.value,
-          lastName : lastName.value,
-          address : address.value,
-          city : city.value,
-          email : email.value,
+        const contact = {
+          firstName: firstName.value,
+          lastName: lastName.value,
+          address: address.value,
+          city: city.value,
+          email: email.value,
         };
-        console.log(data);
 
-        inputs.forEach((input) => (input.value = ''))
+        inputs.forEach((input)  => (input.value = ""));
+        let order = await model.postKanapOrder(contact, products)
+
+        console.log(order.orderId);
       }
     });
-    // let formView = new FormView()
-    // formView.render(form)
   }
+  
 }

@@ -19,4 +19,20 @@ class Model {
         return data;
       });
   }
+
+  // Avec le formulaire et le panier demande a l'api le numéro de commande
+  async postKanapOrder(contact, products) {
+    const order = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ contact, products }),
+    };
+
+    return fetch(`http://localhost:3000/api/products/order`, order)
+      .then((res) => res.json())
+      .then((orderId) => {
+        // console.log(orderId);
+        return orderId;
+      });
+  }
 }

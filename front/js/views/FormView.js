@@ -1,5 +1,0 @@
-class FormView {
-  render(form) {
-    
-  }
-}
