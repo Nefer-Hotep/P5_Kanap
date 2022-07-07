@@ -1,8 +1,7 @@
-// View : Créer la représentation visuel
+// View : Créer la représentation visuel de la page produit
 
 class KanapView {
   render(kanap) {
-    // console.log(kanap);
     // Appel l'image et créer une balise <img>
     const itemImg = document.querySelector(".item__img");
     const kanapImg = document.createElement("img");

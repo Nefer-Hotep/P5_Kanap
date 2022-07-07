@@ -58,7 +58,7 @@ class Controller {
 
     // Affiche le nombre de produit dans le panier
     let totalCartQuantity = document.getElementById("totalQuantity");
-    totalCartQuantity.textContent = cart.getTotalQuantity();
+    totalCartQuantity.textContent = cart.getTotalQuantity(listKanap);
 
     // Affiche le prix total du panier
     let totalCartPrice = document.getElementById("totalPrice");
@@ -67,26 +67,28 @@ class Controller {
     // Affiche le contenu de listKanap avec le template de cartView
     cartView.render(listKanap);
   }
-  
+
   // Supprime les produits du panier situé dans la page panier
   removeItemFromCart(id, color) {
     let cart = new Cart();
     cart.remove(id, color);
     this.cartDisplay();
+    this.createFormOrder();
   }
-  
+
   // Change la quantité de produit situé dans la page panier
-  changeNumberOfItem(id, color) {
+  changeNumberOfItem(event, id, color) {
     let cart = new Cart();
-    cart.changeQuantity(id, color);
-    // this.cartDisplay();
+    cart.changeQuantity(id, color, event.target.value);
+    this.cartDisplay();
   }
-  
+
   // Vérifie les données du formulaire et créer une commande
   createFormOrder() {
-    let form = new Form();
+    let form = new FormValidator();
+    let cart = new Cart();
     let model = new Model();
-    let products = form.getProductIdForPost()
+    let products = cart.getProductIdForPost();
 
     const inputs = document.querySelectorAll(
       ".cart__order__form__question, input"
@@ -129,12 +131,23 @@ class Controller {
           email: email.value,
         };
 
-        inputs.forEach((input)  => (input.value = ""));
-        let order = await model.postKanapOrder(contact, products)
-
-        console.log(order.orderId);
+        if (products == "") {
+          alert("Votre panier est vide.");
+        } else {
+          // inputs.forEach((input) => (input.value = ""));
+          console.log("Toujours pas connard !!");
+          let order = await model.postKanapOrder(contact, products);
+          location.href = `http://127.0.0.1:5500/front/html/confirmation.html?order=${order.orderId}`;
+        }
       }
     });
   }
-  
+
+  // Affiche le numéro de commande sur la page de confirmation
+  orderDisplay() {
+    const urlSearch = new URLSearchParams(window.location.search);
+    let orderView = new OrderView();
+    let order = urlSearch.get("order");
+    orderView.render(order);
+  }
 }

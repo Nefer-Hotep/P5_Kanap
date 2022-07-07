@@ -1,4 +1,4 @@
-// View : Créer la représentation visuel
+// View : Créer la représentation visuel de l'acceuil
 
 class ListKanapView {
   render(kanaps) {

@@ -5,7 +5,6 @@ class Model {
     return fetch("http://localhost:3000/api/products")
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data);
         return data;
       });
   }
@@ -15,12 +14,11 @@ class Model {
     return fetch(`http://localhost:3000/api/products/${id}`)
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data);
         return data;
       });
   }
 
-  // Avec le formulaire et le panier demande a l'api le numéro de commande
+  // Avec les infos du formulaire et du panier récupère depuis l'api le numéro de commande
   async postKanapOrder(contact, products) {
     const order = {
       method: "POST",
@@ -31,7 +29,6 @@ class Model {
     return fetch(`http://localhost:3000/api/products/order`, order)
       .then((res) => res.json())
       .then((orderId) => {
-        // console.log(orderId);
         return orderId;
       });
   }

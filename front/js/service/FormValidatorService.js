@@ -1,17 +1,5 @@
-class Form {
-
-  // Créer un array de product-Id
-  getProductIdForPost() {
-    let products = []
-    let cart = new Cart()
-
-    for (let i = 0; i < cart.cart.length; i++) {
-      let currentProduct = cart.cart[i]    
-      products.push(currentProduct.id)
-    }
-    
-    return products
-  }
+// FormValidator: contrôle les données du formulaire et affiche les messages d'erreurs
+class FormValidator {
 
   // Créer un template de message d'erreur
   errorDisplay(tag, message, valid) {

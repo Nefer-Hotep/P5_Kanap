@@ -1,3 +1,4 @@
+// CartModel : gère les données du panier
 class Cart {
   constructor() {
     // Récupère le panier du local storage
@@ -9,6 +10,19 @@ class Cart {
     }
   }
 
+  // Créer un array de product-Id pour communiquer les infos requis à l'api (POST)
+  getProductIdForPost() {
+    let products = []
+
+    for (let i = 0; i < this.cart.length; i++) {
+      let currentProduct = this.cart[i]    
+      products.push(currentProduct.id)
+    }
+    
+    return products
+  }
+
+  // Créer un array lisKanap avec le panier et les informations de l'api
   async getCartProduct() {
     let listKanap = [];
 
@@ -40,6 +54,7 @@ class Cart {
     } else {
       this.cart.push(product);
     }
+    alert('Kanap ajouté au panier !')
     this.save();
   }
 
@@ -47,27 +62,24 @@ class Cart {
   remove(id, color) {
     this.cart = this.cart.filter((p) => p.id !== id || p.color !== color);
     this.save();
+    if (this.cart == "") {
+      document.getElementById("order").hidden = true
+    }
   }
 
   // Change une quantité d'un produit du panier
-  changeQuantity(id, color) {
+  changeQuantity(id, color, newQuantity) {
     let selectedProduct = this.cart.find((p) => p.id == id && p.color == color);
    
-    document.querySelectorAll(".itemQuantity").forEach(input => {
-      input.addEventListener('click', (e) => {
-        if (selectedProduct !== undefined && e.currentTarget.value > 0) {
-          selectedProduct.quantity = e.currentTarget.value;
-          this.save();
-        }
-      })
-    })
+    selectedProduct.quantity = newQuantity
+    this.save()
   }
 
   // Calcule la quantité total de produit dans le panier
-  getTotalQuantity() {
+  getTotalQuantity(listKanap) {
     let number = 0;
-    for (let product of this.cart) {
-      number += product.quantity;
+    for (let kanap of listKanap) {
+      number += Number(kanap.quantity) ;
     }
     return number;
   }
