@@ -1,6 +1,7 @@
 // Controller : lie l'utilisateur et le system, il gère les interactions
+
 class Controller {
-  // Affiche des données reçu de tous les canapés
+  // Affiche des données reçu de tous les canapés collectées dnas le model
   async kanapsDisplay() {
     let model = new Model();
     let kanaps = await model.getListKanap();

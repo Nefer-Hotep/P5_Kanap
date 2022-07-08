@@ -1,4 +1,5 @@
-// View : Créer la représentation visuel du panier
+// View : Créer la représentation visuel du panier 
+
 class CartView {
   render(listKanap) {
     let cartItems = document.getElementById("cart__items");
@@ -9,6 +10,7 @@ class CartView {
     }
   }
   
+  // Créer un template d'affichage pour produit du panier
   displayOneKanap(kanap) {
     let divKanap = `
     <article class="cart__item" data-id="${kanap._id}" data-color="${kanap.color}">
