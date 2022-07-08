@@ -1,4 +1,4 @@
-// View : Créer la représentation visuel
+// View : Créer la représentation visuel de la page produit
 
 class KanapView {
   render(kanap) {

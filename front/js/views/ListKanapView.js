@@ -1,8 +1,7 @@
-// View : Créer la représentation visuel
+// View : Créer la représentation visuel de l'acceuil
 
 class ListKanapView {
   render(kanaps) {
-    
     for (let i = 0; i < kanaps.length; i++) {
       
       // Récupère l'id de <section id="items">
