@@ -39,7 +39,7 @@ class Controller {
     product.color = color;
 
     let cart = new Cart(id, quantity, color);
-    if (quantity == 0) {
+    if (quantity == 0 || quantity < 0) {
       alert("Vous n'avez pas sélectionné un nombre d'article");
     } else if (color == 0) {
       alert("SVP, choisissez une couleur");
