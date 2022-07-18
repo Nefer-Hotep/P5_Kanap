@@ -71,8 +71,11 @@ class Cart {
   changeQuantity(id, color, newQuantity) {
     let selectedProduct = this.cart.find((p) => p.id == id && p.color == color);
    
-    selectedProduct.quantity = newQuantity
+    if(newQuantity > 0){
+      selectedProduct.quantity = newQuantity
     this.save()
+    }
+    
   }
 
   // Calcule la quantité total de produit dans le panier
